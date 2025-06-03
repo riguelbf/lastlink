@@ -1,0 +1,37 @@
+{
+  "name": "fullstack-monorepo",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "backend",                         // container a ser usado como host da devcontainer
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "overrideCommand": false,
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-docker",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+
+  "forwardPorts": [5053, 5173, 5432],
+
+  "postCreateCommand": "dotnet restore /workspace/backend/app.sln && pnpm install --prefix /workspace/frontend/app",
+
+  "onCreateCommand": "code /workspace/lastlink.code-workspace || true",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/dotnet:1": {
+      "version": "9.0"
+    }
+  }
+}

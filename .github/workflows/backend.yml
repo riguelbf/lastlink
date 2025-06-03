@@ -1,0 +1,39 @@
+name: Build Backend
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+  pull_request:
+    paths:
+      - 'backend/**'
+
+env:
+  DOTNET_VERSION: "9.x"
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore
+        run: dotnet restore backend/app.sln
+
+      - name: Build
+        run: dotnet build backend/app.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test backend/app.sln --configuration Release --no-restore --no-build
+
+      - name: Publish
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: dotnet publish backend/app.sln --configuration Release --no-restore --no-build
