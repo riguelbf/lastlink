@@ -1,5 +1,7 @@
 using Application.AdvanceRequests.Dependencies;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Application.Dependencies;
 
@@ -16,6 +18,11 @@ public static class ApplicationModule
     /// <returns>The updated IServiceCollection.</returns>
     public static IServiceCollection AddApplicationModule(this IServiceCollection services)
     {
+        // Register MediatR
+        services.AddMediatR(cfg => 
+            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            
+        // Register application modules
         services.AddAdvanceRequestsModule();
         
         return services;

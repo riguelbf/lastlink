@@ -8,7 +8,7 @@ public class GetAdvanceRequestsByCreatorEndpoint : EndpointBase
 {
     public override void MapEndpoint(IEndpointRouteBuilder app)
     {
-        var advanceRequests = app.MapGroup("/api/v{version:apiVersion}/advancerequests")
+        var advanceRequests = app.MapGroup("/api/v1/advancerequests")
             .WithTags("Advance Requests")
             .WithOpenApi();
 

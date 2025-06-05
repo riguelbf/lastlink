@@ -8,7 +8,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc9d18ae-5441-4929-904f-f15e85803f41" name="Changes" comment="" />
+    <list default="true" id="cc9d18ae-5441-4929-904f-f15e85803f41" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.app/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Dependencies/ApplicationModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Dependencies/ApplicationModule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/AdvanceRequestEndpoint.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/ApproveAdvanceRequestEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/ApproveAdvanceRequestEndpoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/CreateAdvanceRequestEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/CreateAdvanceRequestEndpoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/GetAdvanceRequestEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/GetAdvanceRequestEndpoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/GetAdvanceRequestsByCreatorEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/GetAdvanceRequestsByCreatorEndpoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/RejectAdvanceRequestEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/RejectAdvanceRequestEndpoint.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,9 +28,11 @@
     <option name="firstShow" value="false" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../romtech" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Presentation/Endpoints/HealthCheckEndpoint.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73e11ef76812365d15214c653c10654b13e5da0cccfb58d12e5ebf22330a599/ApiVersionRouteConstraint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8aca45508683a6169bab9e8bd96b7cda607d638cacfaa31173c8c278c45/ISender.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -36,22 +47,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.Presentation: http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Project.src\\Presentation.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/improvement-on-validators&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.codeium.AppSettingsConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.Presentation: http.executor": "Run",
+    ".NET Launch Settings Profile.http.executor": "Debug",
+    ".NET Project.src\\Presentation.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "fix/create-stable-version",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.codeium.AppSettingsConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.http">
     <configuration name="src\Presentation" type="DotNetProject" factoryName=".NET Project" temporary="true">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Presentation/bin/Debug/net9.0/Presentation" />
@@ -122,6 +135,7 @@
       <workItem from="1748978494402" duration="243000" />
       <workItem from="1748978784429" duration="455000" />
       <workItem from="1748981518405" duration="26092000" />
+      <workItem from="1749140578438" duration="4392000" />
     </task>
     <servers />
   </component>
@@ -148,6 +162,32 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/CreateAdvanceRequestEndpoint.cs</url>
+          <line>28</line>
+          <properties documentPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/CreateAdvanceRequestEndpoint.cs" containingFunctionPresentation="Method 'HandleAsync'">
+            <startOffsets>
+              <option value="1046" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1105" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/CreateAdvanceRequest/CreateAdvanceRequestCommandHandler.cs</url>
+          <line>26</line>
+          <properties documentPath="$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/CreateAdvanceRequest/CreateAdvanceRequestCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="901" />
+            </startOffsets>
+            <endOffsets>
+              <option value="987" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
