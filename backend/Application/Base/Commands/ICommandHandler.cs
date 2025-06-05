@@ -1,6 +1,6 @@
-using SharedKernel;
+using SharedKernel.Primitives;
 
-namespace Application.Products.Commands;
+namespace Application.Base.Commands;
 
 public interface ICommandHandler<in TCommand>
     where TCommand : ICommand
