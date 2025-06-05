@@ -20,7 +20,7 @@ public class ApproveAdvanceRequestEndpoint : EndpointBase
             .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
-    private static async Task<IResult> HandleAsync(
+    public static async Task<IResult> HandleAsync(
         [FromRoute] Guid id,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
