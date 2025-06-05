@@ -1,6 +1,7 @@
-using SharedKernel;
+using Application.Products.Queries;
+using SharedKernel.Primitives;
 
-namespace Application.Products.Queries;
+namespace Application.Base.Queries;
 
 public interface IQueryHandler<in TQuery, TResponse>
     where TQuery : IQuery<TResponse>
