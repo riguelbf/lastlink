@@ -1,6 +1,7 @@
 using Application.Features.AdvanceRequests.Queries.GetAdvanceRequestById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Common;
 
 namespace Presentation.Endpoints.AdvanceRequest;
 
@@ -19,7 +20,7 @@ public class GetAdvanceRequestEndpoint : EndpointBase
             .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
-    private static async Task<IResult> HandleAsync(
+    public static async Task<IResult> HandleAsync(
         [FromRoute] Guid id,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
@@ -31,7 +32,7 @@ public class GetAdvanceRequestEndpoint : EndpointBase
             onSuccess: Results.Ok,
             onFailure: error => error.Code switch
             {
-                "NotFound" => Results.NotFound(new { error.Code, error.Message }),
+                "NotFound" => Results.NotFound(new ApiError(error.Code, error.Message)),
                 _ => Results.Problem(
                     detail: error.Message,
                     statusCode: StatusCodes.Status500InternalServerError)

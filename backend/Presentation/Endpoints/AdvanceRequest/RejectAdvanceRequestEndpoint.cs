@@ -1,6 +1,7 @@
 using Application.AdvanceRequests.Commands.UpdateAdvanceRequestStatus;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Common;
 
 namespace Presentation.Endpoints.AdvanceRequest;
 
@@ -20,7 +21,7 @@ public class RejectAdvanceRequestEndpoint : EndpointBase
             .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
-    private static async Task<IResult> HandleAsync(
+    public static async Task<IResult> HandleAsync(
         [FromRoute] Guid id,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
@@ -32,8 +33,8 @@ public class RejectAdvanceRequestEndpoint : EndpointBase
             onSuccess: Results.NoContent,
             onFailure: error => error.Code switch
             {
-                "NotFound" => Results.NotFound(new { error.Code, error.Message }),
-                "Validation" => Results.BadRequest(new { error.Code, error.Message }),
+                "AdvanceRequest.NotFound" => Results.NotFound(new ApiError(error.Code, error.Message)),
+                "Validation" => Results.BadRequest(new ApiError(error.Code, error.Message)),
                 _ => Results.Problem(
                     detail: error.Message,
                     statusCode: StatusCodes.Status500InternalServerError)

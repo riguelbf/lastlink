@@ -20,7 +20,7 @@ public class GetAdvanceRequestsByCreatorEndpoint : EndpointBase
             .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
-    private static async Task<IResult> HandleAsync(
+    public static async Task<IResult> HandleAsync(
         [FromRoute] string creatorId,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)

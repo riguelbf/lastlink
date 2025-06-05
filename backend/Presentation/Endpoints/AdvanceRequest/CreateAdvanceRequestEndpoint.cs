@@ -1,6 +1,7 @@
 using Application.Features.AdvanceRequests.Commands.CreateAdvanceRequest;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Common;
 
 namespace Presentation.Endpoints.AdvanceRequest;
 
@@ -21,7 +22,7 @@ public class CreateAdvanceRequestEndpoint : EndpointBase
             .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
-    private static async Task<IResult> HandleAsync(
+    public static async Task<IResult> HandleAsync(
         [FromBody] CreateAdvanceRequestCommand command,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
@@ -30,13 +31,13 @@ public class CreateAdvanceRequestEndpoint : EndpointBase
         
         return result.Match(
             onSuccess: id => Results.CreatedAtRoute(
-                routeName: "GetAdvanceRequestById",
+                routeName: "CreateAdvanceRequest",
                 routeValues: new { id },
                 value: new { id }),
             onFailure: error => error.Code switch
             {
-                "AdvanceRequest.PendingRequestExists" => Results.BadRequest(new { error.Code, error.Message }),
-                "Conflict" => Results.Conflict(new { error.Code, error.Message }),
+                "AdvanceRequest.PendingRequestExists" => Results.BadRequest(new ApiError(error.Code, error.Message)),
+                "Conflict" => Results.Conflict(new ApiError(error.Code, error.Message)),
                 _ => Results.Problem(
                     detail: error.Message,
                     statusCode: StatusCodes.Status500InternalServerError)
