@@ -1,9 +1,11 @@
+using Domain.AdvanceRequests.Repositories;
 using Infrastructure.DataBase.DataContext;
+using Infrastructure.DataBase.Repositories;
 using Infrastructure.DataBase.Repositories.Base;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Dependencies;
@@ -22,7 +24,10 @@ public static class InfrastructureModule
     private static IServiceCollection AddDatabase(this IServiceCollection services)
     {
         var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-        if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        }
 
         services.AddDbContext<ApplicationDbContext>(
             options => options
@@ -37,8 +42,9 @@ public static class InfrastructureModule
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
-        
+        services.AddScoped<IUnitOfWork,UnitOfWork>();
+        services.AddScoped<IAdvanceRequestRepository, AdvanceRequestRepository>();
+            
         return services;
     }
 

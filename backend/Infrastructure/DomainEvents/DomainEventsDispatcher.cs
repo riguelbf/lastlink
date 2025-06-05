@@ -1,11 +1,18 @@
 using System.Collections.Concurrent;
 using Microsoft.Extensions.DependencyInjection;
-using SharedKernel;
+using SharedKernel.Primitives;
 
 namespace Infrastructure.DomainEvents;
 
-internal sealed class DomainEventsDispatcher(IServiceProvider serviceProvider) : IDomainEventsDispatcher
+internal sealed class DomainEventsDispatcher : IDomainEventsDispatcher
 {
+    private readonly IServiceProvider _serviceProvider;
+
+    public DomainEventsDispatcher(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
     private static readonly ConcurrentDictionary<Type, Type> HandlerTypeDictionary = new();
     private static readonly ConcurrentDictionary<Type, Type> WrapperTypeDictionary = new();
 
@@ -15,7 +22,7 @@ internal sealed class DomainEventsDispatcher(IServiceProvider serviceProvider) :
     {
         foreach (IDomainEvent domainEvent in domainEvents)
         {
-            using IServiceScope scope = serviceProvider.CreateScope();
+            using IServiceScope scope = _serviceProvider.CreateScope();
 
             Type domainEventType = domainEvent.GetType();
             Type handlerType = HandlerTypeDictionary.GetOrAdd(

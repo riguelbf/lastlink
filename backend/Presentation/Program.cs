@@ -1,12 +1,14 @@
 using System.Reflection;
+using Application.AdvanceRequests.Commands.UpdateAdvanceRequestStatus;
 using Application.Dependencies;
+using Application.Features.AdvanceRequests.Commands.CreateAdvanceRequest;
 using Asp.Versioning;
 using DotNetEnv;
 using HealthChecks.UI.Client;
 using Infrastructure.Dependencies;
+using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Presentation.Dependencies;
-using Presentation.Extensions;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -29,13 +31,13 @@ builder.Host.UseSerilog();
 
 builder.Services.AddSwaggerGen();
 
+// Configure services
 builder.Services
     .AddApplicationModule()
     .AddPresentationModule()
     .AddInfrastructureModule(builder.Configuration);
-
-builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
-
+    
+// Configure API versioning
 builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1, 0);
@@ -44,42 +46,66 @@ builder.Services.AddApiVersioning(options =>
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
 });
 
+// Configure CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
         var frontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL");
-        
-        policy
-            .WithOrigins(frontendUrl ?? string.Empty)
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+        if (!string.IsNullOrEmpty(frontendUrl))
+        {
+            policy.WithOrigins(frontendUrl)
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        }
     });
 });
 
 builder.Services.AddEndpointsApiExplorer();
 
+// Configure Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "LastLink API", Version = "v1" });
+    
+    // Include XML comments for API documentation
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        c.IncludeXmlComments(xmlPath);
+    }
+});
+
+// Configure health checks
+builder.Services.AddHealthChecks();
+    // .AddDbContextCheck<Infrastructure.Persistence.ApplicationDbContext>();
+
 var app = builder.Build();
 
-app.UseCors();
-app.MapEndpoints();
-
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerWithUi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "LastLink API V1");
+    });
 }
 
-app.MapHealthChecks("health", new HealthCheckOptions
+app.UseHttpsRedirection();
+app.UseCors();
+
+// Map API endpoints
+var api = app.NewVersionedApi();
+
+// Configure health checks
+app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-app.UseRequestContextLogging();
-
 app.UseSerilogRequestLogging();
-
-app.UseGlobalExceptionHandling();
 
 await app.RunAsync();
 

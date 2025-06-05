@@ -3,7 +3,7 @@ using Infrastructure.DataBase.DataContext;
 
 namespace Infrastructure.DataBase.Repositories.Base
 {
-    public sealed class UnitOfWork : IUnitOfWork, IDisposable
+    public sealed class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
         private readonly Hashtable _repositories = new();
