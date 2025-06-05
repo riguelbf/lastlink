@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lastlink-backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5053
+      - CONNECTION_STRING=Host=db;Database=lastlink;Username=postgres;Password=postgres
+      - FRONTEND_URL=http://localhost:3000
+    ports:
+      - "5053:5053"
+    depends_on:
+      - db
+    volumes:
+      - ./:/app
+      - ~/.nuget/packages:/root/.nuget/packages:ro
+    command: bash -c "dotnet watch run --project Presentation --urls http://0.0.0.0:5053"
+
+  db:
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    ports:
+      - "5050:80"
