@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
@@ -13,5 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
     </ItemGroup>
+
+    <!-- No need for explicit Compile include as the SDK includes .cs files by default -->
 
 </Project>

@@ -1,53 +1,130 @@
-# Backend Project Documentation
+# LastLink Backend
 
 ## Overview
-This backend is a modular, testable, and scalable ASP.NET Core Web API designed for product management and stock operations. It follows modern DDD and Clean Architecture principles, with a clear separation of concerns between Application, Domain, Infrastructure, and Presentation layers.
+This is the backend service for the LastLink platform, built with .NET 9.0 and following Clean Architecture principles. It provides APIs for managing advance payment requests for creators with a 5% fee calculation.
 
----
+## Key Features
 
-## Architecture
-- **Domain Layer**: Contains core business entities and domain logic (e.g., `Product`).
-- **Application Layer**: Contains use case logic, command/query handlers, and DTOs for operations like creating, updating, deleting, and managing product stock.
-- **Infrastructure Layer**: Implements repositories, database access (EF Core), and external dependencies.
-- **Presentation Layer**: Exposes HTTP endpoints, configures middleware, and handles API versioning and validation.
-- **SharedKernel**: Provides cross-cutting concerns such as `Result<T>`, base classes, and interfaces.
+- **Advance Request Management**: Create, view, approve, and reject advance payment requests
+- **Creator-Specific Requests**: View all advance requests for a specific creator
+- **Automatic Fee Calculation**: 5% fee is automatically calculated on each advance request
+- **Request Status Tracking**: Track the status of each advance request (Pending, Approved, Rejected)
+- **RESTful API**: Clean, consistent API design following REST principles
+- **API Versioning**: Support for multiple API versions
+- **Health Checks**: Built-in health check endpoints
+- **Swagger/OpenAPI**: Interactive API documentation
 
-### Key Patterns & Practices
-- **CQRS**: Commands and queries are handled by dedicated handler classes.
-- **Dependency Injection**: All services, handlers, and repositories are registered and injected via DI.
-- **FluentValidation**: Used for validating commands and queries.
-- **Unit Testing**: Uses xUnit and NSubstitute for isolated and integration tests.
-- **API Versioning**: Supports versioned endpoints via URL segments.
-- **Soft Delete**: Products are soft-deleted (flagged as deleted, not removed from DB).
+## Technology Stack
 
----
+- **.NET 9.0**: Cross-platform, high-performance framework
+- **Entity Framework Core**: ORM for data access
+- **PostgreSQL**: Relational database
+- **MediatR**: In-process messaging for implementing CQRS
+- **FluentValidation**: Validation library
+- **xUnit**: Unit testing framework
+- **Serilog**: Logging framework
+- **Docker**: Containerization
 
-## Main Libraries & Tools
-- **ASP.NET Core**: Web API framework.
-- **Entity Framework Core**: ORM for database access.
-- **FluentValidation**: Command/query validation.
-- **NSubstitute**: Mocking for unit tests.
-- **xUnit**: Unit testing framework.
-- **Bogus**: Fake data generation for tests.
-- **Serilog**: Structured logging.
-- **HealthChecks.UI**: Health check endpoints and UI.
+## Getting Started
 
----
+### Prerequisites
 
-## ./backend/scripts
-Scripts for database migrations and updates are located in `Infrastructure/scripts`:
-- `ef-migration.sh`: Creates a new EF Core migration.
-- `ef-update.sh`: Applies migrations to update the database.
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [Docker](https://www.docker.com/products/docker-desktop) (for running PostgreSQL in development)
+- [Node.js](https://nodejs.org/) (for running the frontend)
 
-Usage examples (from project root):
-```sh
-make migrate MIGRATION_NAME=CreateProductsTable
-make db-update
-```
+### Development Setup
 
----
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/lastlink.git
+   cd lastlink/backend
+   ```
+
+2. **Set up environment variables**
+   Create a `.env` file in the `backend` directory with the following content:
+   ```
+   CONNECTION_STRING=Host=localhost;Database=lastlink;Username=postgres;Password=postgres
+   FRONTEND_URL=http://localhost:3000
+   ```
+
+3. **Start the database**
+   ```bash
+   docker-compose up -d
+   ```
+
+4. **Apply database migrations**
+   ```bash
+   dotnet ef database update --project Infrastructure
+   ```
+
+5. **Run the application**
+   ```bash
+   dotnet run --project Presentation
+   ```
+
+   The API will be available at `https://localhost:5053`
+
+## API Documentation
+
+Once the application is running, you can access the Swagger UI at `https://localhost:5053/swagger`
 
 ## Project Structure
+
+The solution is organized into several projects following Clean Architecture principles:
+
+- **Application**: Contains application logic, use cases, and DTOs
+- **Domain**: Contains the domain model, entities, and repository interfaces
+- **Infrastructure**: Contains data access, external services, and other infrastructure concerns
+- **Presentation**: Contains the Web API controllers and API endpoints
+- **SharedKernel**: Contains common base classes and interfaces used across layers
+
+## Testing
+
+To run the tests:
+
+```bash
+dotnet test
+```
+
+## Development
+
+### Running Migrations
+
+To create a new migration:
+
+```bash
+dotnet ef migrations add MigrationName --project Infrastructure --startup-project Presentation
+```
+
+To apply migrations:
+
+```bash
+dotnet ef database update --project Infrastructure --startup-project Presentation
+```
+
+## Deployment
+
+### Docker
+
+Build the Docker image:
+
+```bash
+docker build -t lastlink-backend .
+```
+
+Run the container:
+
+```bash
+docker run -d -p 5053:80 --name lastlink-backend \
+  -e CONNECTION_STRING=your_connection_string \
+  -e FRONTEND_URL=your_frontend_url \
+  lastlink-backend
+```
+
+## License
+
+This project is licensed under the MIT License.
 ```
 backend/
 ├── Application/       # Use cases, commands, handlers, DTOs
