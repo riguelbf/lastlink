@@ -2,6 +2,7 @@ using Application.AdvanceRequests.Commands.UpdateAdvanceRequestStatus;
 using Domain.AdvanceRequests.Repositories;
 using MediatR;
 using SharedKernel.Primitives;
+using IUnitOfWork = Infrastructure.DataBase.Repositories.Base.IUnitOfWork;
 
 namespace Application.Features.AdvanceRequests.Commands.UpdateAdvanceRequestStatus;
 
@@ -12,14 +13,11 @@ internal sealed class UpdateAdvanceRequestStatusCommandHandler :
     IRequestHandler<ApproveAdvanceRequestCommand, Result>,
     IRequestHandler<RejectAdvanceRequestCommand, Result>
 {
-    private readonly IAdvanceRequestRepository _advanceRequestRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public UpdateAdvanceRequestStatusCommandHandler(
-        IAdvanceRequestRepository advanceRequestRepository,
         IUnitOfWork unitOfWork)
     {
-        _advanceRequestRepository = advanceRequestRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -48,7 +46,8 @@ internal sealed class UpdateAdvanceRequestStatusCommandHandler :
         Func<Domain.AdvanceRequests.AdvanceRequest, Result> updateAction,
         CancellationToken cancellationToken)
     {
-        var request = await _advanceRequestRepository
+        var request = await _unitOfWork
+            .GetRepository<IAdvanceRequestRepository>()
             .GetByIdAsync(requestId, cancellationToken);
 
         if (request is null)

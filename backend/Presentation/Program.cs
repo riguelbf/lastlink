@@ -1,14 +1,13 @@
 using System.Reflection;
-using Application.AdvanceRequests.Commands.UpdateAdvanceRequestStatus;
 using Application.Dependencies;
-using Application.Features.AdvanceRequests.Commands.CreateAdvanceRequest;
 using Asp.Versioning;
 using DotNetEnv;
 using HealthChecks.UI.Client;
 using Infrastructure.Dependencies;
-using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Presentation.Dependencies;
+using Presentation.Endpoints;
+using Presentation.Extensions;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -21,9 +20,14 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
+Env.Load();
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-Env.Load();
+///////////////////////////////////////////////////////////////////////////////////
+// Builder configuration //////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 builder.WebHost.UseUrls("http://0.0.0.0:5053");
 
@@ -33,9 +37,9 @@ builder.Services.AddSwaggerGen();
 
 // Configure services
 builder.Services
+    .AddInfrastructureModule()
     .AddApplicationModule()
-    .AddPresentationModule()
-    .AddInfrastructureModule(builder.Configuration);
+    .AddPresentationModule();
     
 // Configure API versioning
 builder.Services.AddApiVersioning(options =>
@@ -79,7 +83,11 @@ builder.Services.AddSwaggerGen(c =>
 
 // Configure health checks
 builder.Services.AddHealthChecks();
-    // .AddDbContextCheck<Infrastructure.Persistence.ApplicationDbContext>();
+builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
+
+///////////////////////////////////////////////////////////////////////////////////
+// App configuration /////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 var app = builder.Build();
 
@@ -93,6 +101,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.MapEndpoints();
 app.UseHttpsRedirection();
 app.UseCors();
 
@@ -100,12 +109,11 @@ app.UseCors();
 var api = app.NewVersionedApi();
 
 // Configure health checks
-app.MapHealthChecks("/health", new HealthCheckOptions
-{
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+app.MapHealthCheckEndpoint();
 
 app.UseSerilogRequestLogging();
+app.UseRequestContextLogging();
+app.UseGlobalExceptionHandling();
 
 await app.RunAsync();
 

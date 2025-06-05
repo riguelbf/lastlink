@@ -1,24 +1,38 @@
-using Microsoft.AspNetCore.Routing;
-using Presentation.HealthChecks;
+using System.Reflection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Presentation.Endpoints;
 
 namespace Presentation.Common;
 
 public static class EndpointExtensions
 {
-    public static IEndpointRouteBuilder MapApiEndpoints(this IEndpointRouteBuilder endpoints)
+    public static IServiceCollection AddEndpoints(this IServiceCollection services, Assembly assembly)
     {
-        // Map health check endpoint
-        endpoints.MapHealthCheckEndpoint();
-        
-        // Map other API endpoints here
-        // Example: endpoints.MapAdvanceRequestEndpoints();
-        
-        return endpoints;
+        var serviceDescriptors = assembly
+            .DefinedTypes
+            .Where(type => type is { IsAbstract: false, IsInterface: false } &&
+                           type.IsAssignableTo(typeof(IEndpoint)))
+            .Select(type => ServiceDescriptor.Transient(typeof(IEndpoint), type))
+            .ToArray();
+
+        services.TryAddEnumerable(serviceDescriptors);
+
+        return services;
     }
-    
-    public static WebApplication UseApiEndpoints(this WebApplication app)
+
+    public static IApplicationBuilder MapEndpoints(
+        this WebApplication app,
+        RouteGroupBuilder? routeGroupBuilder = null)
     {
-        app.MapControllers();
+        var endpoints = app.Services.GetRequiredService<IEnumerable<IEndpoint>>();
+
+        IEndpointRouteBuilder builder = routeGroupBuilder is null ? app : routeGroupBuilder;
+
+        foreach (IEndpoint endpoint in endpoints)
+        {
+            endpoint.MapEndpoint(builder);
+        }
+
         return app;
     }
 }

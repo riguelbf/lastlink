@@ -1,8 +1,4 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-
-namespace Presentation.HealthChecks;
+namespace Presentation.Endpoints;
 
 public static class HealthCheckEndpoint
 {
@@ -10,7 +6,6 @@ public static class HealthCheckEndpoint
     {
         endpoints.MapGet("/health", async context =>
         {
-            // Add any additional health checks here
             await context.Response.WriteAsync("Healthy");
         });
     }
