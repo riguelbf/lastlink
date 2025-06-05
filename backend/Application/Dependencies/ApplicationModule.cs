@@ -1,7 +1,7 @@
-using Application.AdvanceRequests.Dependencies;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Application.Features.AdvanceRequests.Dependencies;
 
 namespace Application.Dependencies;
 

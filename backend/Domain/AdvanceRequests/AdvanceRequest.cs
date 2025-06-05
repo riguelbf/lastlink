@@ -66,13 +66,20 @@ public class AdvanceRequest : AggregateRoot, IAuditableEntity
         var amount = amountResult.Value;
         var netAmount = amount.CalculateNetAmount();
 
+        var utcRequestDate = requestDate.Kind == DateTimeKind.Utc 
+            ? requestDate 
+            : requestDate.ToUniversalTime();
+
         var request = new AdvanceRequest(
             Guid.NewGuid(),
             creatorId,
             amount.Value,
             netAmount,
-            requestDate,
-            AdvanceRequestStatus.Pending);
+            utcRequestDate,
+            AdvanceRequestStatus.Pending)
+        {
+            CreatedAt = DateTime.UtcNow
+        };
 
         // TODO: Add domain event for request creation
 
@@ -94,7 +101,7 @@ public class AdvanceRequest : AggregateRoot, IAuditableEntity
         }
 
         Status = AdvanceRequestStatus.Approved;
-        ApprovedDate = approvalDate;
+        ApprovedDate = approvalDate.Kind == DateTimeKind.Utc ? approvalDate : approvalDate.ToUniversalTime();
         ModifiedAt = DateTime.UtcNow;
 
         // TODO: Add domain event for approval
@@ -117,7 +124,7 @@ public class AdvanceRequest : AggregateRoot, IAuditableEntity
         }
 
         Status = AdvanceRequestStatus.Rejected;
-        RejectedDate = rejectionDate;
+        RejectedDate = rejectionDate.Kind == DateTimeKind.Utc ? rejectionDate : rejectionDate.ToUniversalTime();
         ModifiedAt = DateTime.UtcNow;
 
         // TODO: Add domain event for rejection

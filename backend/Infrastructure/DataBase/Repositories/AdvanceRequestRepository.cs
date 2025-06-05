@@ -17,9 +17,9 @@ public class AdvanceRequestRepository(ApplicationDbContext dbContext) : IAdvance
         await dbContext.AdvanceRequests.AddAsync(advanceRequest, cancellationToken);
     }
 
-    public void Update(DomainAdvanceRequest entity)
+    public void Update(DomainAdvanceRequest advanceRequest)
     {
-        throw new NotImplementedException();
+        dbContext.AdvanceRequests.Update(advanceRequest);
     }
 
     public void Delete(DomainAdvanceRequest entity)

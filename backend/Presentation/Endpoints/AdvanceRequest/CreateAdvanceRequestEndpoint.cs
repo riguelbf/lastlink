@@ -35,7 +35,7 @@ public class CreateAdvanceRequestEndpoint : EndpointBase
                 value: new { id }),
             onFailure: error => error.Code switch
             {
-                "Validation" => Results.BadRequest(new { error.Code, error.Message }),
+                "AdvanceRequest.PendingRequestExists" => Results.BadRequest(new { error.Code, error.Message }),
                 "Conflict" => Results.Conflict(new { error.Code, error.Message }),
                 _ => Results.Problem(
                     detail: error.Message,

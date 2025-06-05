@@ -12,7 +12,7 @@ public class GetAdvanceRequestsByCreatorEndpoint : EndpointBase
             .WithTags("Advance Requests")
             .WithOpenApi();
 
-        advanceRequests.MapGet("/creator/{creatorId:guid}", HandleAsync )
+        advanceRequests.MapGet("/creator/{creatorId}", HandleAsync )
             .WithName("GetAdvanceRequestsByCreator")
             .Produces<IReadOnlyList<GetAdvanceRequestsByCreatorResponse>>().Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status400BadRequest)
@@ -21,7 +21,7 @@ public class GetAdvanceRequestsByCreatorEndpoint : EndpointBase
     }
 
     private static async Task<IResult> HandleAsync(
-        [FromRoute] Guid creatorId,
+        [FromRoute] string creatorId,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
     {
