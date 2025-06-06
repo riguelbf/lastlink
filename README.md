@@ -1,60 +1,162 @@
-# lastlink Project
+# LastLink Backend
 
 ## Overview
-This project is a full-stack application built using a backend in C# and a frontend in React. The project aims to provide an inventory management system.
 
-This project provides a comprehensive inventory management system that allows users to manage products, track stock levels, and handle pricing. It features a user-friendly interface built with [React](https://reactjs.org/) and a robust backend developed in [C#](https://docs.microsoft.com/en-us/dotnet/csharp/). The application is designed to be easily deployable using [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/), facilitating a smooth development and production experience. It features a user-friendly interface built with React and a robust backend developed in C#. The application is designed to be easily deployable using Docker and Docker Compose, facilitating a smooth development and production experience.
+This is the backend service for the LastLink platform, built with .NET 9.0 and following Clean Architecture principles. It provides APIs for managing advance payment requests for creators with a 5% fee calculation.
+
+## Key Features
+
+- **Advance Request Management**: Create, view, approve, and reject advance payment requests
+- **Creator-Specific Requests**: View all advance requests for a specific creator
+- **Automatic Fee Calculation**: 5% fee is automatically calculated on each advance request
+- **Request Status Tracking**: Track the status of each advance request (Pending, Approved, Rejected)
+- **RESTful API**: Clean, consistent API design following REST principles
+- **API Versioning**: Support for multiple API versions
+- **Health Checks**: Built-in health check endpoints
+- **Swagger/OpenAPI**: Interactive API documentation
+
+## Technology Stack
+
+- **.NET 9.0**: Cross-platform, high-performance framework
+- **Entity Framework Core**: ORM for data access
+- **PostgreSQL**: Relational database
+- **MediatR**: In-process messaging for implementing CQRS
+- **FluentValidation**: Validation library
+- **xUnit**: Unit testing framework
+- **Serilog**: Logging framework
+- **Docker**: Containerization
+
+## Getting Started
 
 ### Prerequisites
-- Docker
-- Docker Compose
-- Node JS
-- .NET 9
 
-### To-do list (for improvements)
-- Implement user authentication and authorization.
-- Add e2e tests for critical components.
-- Add cache
-- Optimize database queries for performance.
-- Enhance the user interface for better UX.
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [Docker](https://www.docker.com/products/docker-desktop) (for running PostgreSQL in development)
+- [Node.js](https://nodejs.org/) (for running the frontend)
 
-## Development Environment
-This project uses a dev-container to make development easier. It ensures that everyone has the same setup, which helps avoid issues. For more information, check out the [dev-container documentation](https://code.visualstudio.com/docs/remote/containers).
+### Development Setup
 
+1. **Clone the repository**
 
-### Running the Application with Docker Compose
-1. Clone the repository:
    ```bash
-   git clone git@github.com:riguelbf/lastlink.git
-   cd lastlink
+   git clone https://github.com/riguelbf/lastlink.git
+   cd lastlink/backend
    ```
 
-2. Ensure you have the necessary environment variables set in your `.env` files for both backend and frontend.
+2. **Set up environment variables**
+   Copy the example environment file and update it with your configuration:
 
-3. Navigate to the project root directory and run:
    ```bash
-   docker-compose up --build
+   cp .env.example .env
    ```
 
-4. Access the application in your browser at `http://localhost:5053`.
+   Then update the `.env` file with your database credentials and other settings.
 
-### Backend Documentation
-- The backend is located in the `./backend` directory. It includes the API endpoints and business logic for the application.
-- Refer to the `README.md` in the [`./backend`](https://github.com/riguelbf/lastlink/blob/main/backend/README.md) directory for detailed information on the backend setup and usage.
+### Available Make Commands
 
-### Frontend Documentation
-- The frontend is located in the `./frontend` directory. It includes the React application for the user interface.
-- Refer to the `README.md` in the [`./frontend`](https://github.com/riguelbf/lastlink/blob/main/frontend/README.md) directory for detailed information on the frontend setup and usage.
+- `make migrate MIGRATION_NAME=Name` - Create a new EF Core migration
+- `make db-update` - Apply pending database migrations
+- `make remove-migrations` - Remove the most recent migration
+- `make docker-up` - Start development containers (PostgreSQL and API)
+- `make docker-down` - Stop and remove development containers
+- `make docker-logs` - View container logs
 
-## Additional References
-- [React](https://reactjs.org/)
-- [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
-- [Docker](https://www.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
-- [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-5.0)
-- [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
-- [Serilog](https://serilog.net/)
-- [Vite](https://vitejs.dev/)
+3. **Run the application**
+
+   ```bash
+   make docker-up
+   ```
+
+> API Access The API will be available at `https://localhost:5053`
+
+4. **Database Migrations (just for development purposes)**
+
+   - Create a new migration:
+
+     ```bash
+     make migrate MIGRATION_NAME=YourMigrationName
+     ```
+
+   - Apply pending migrations:
+
+     ```bash
+     make db-update
+     ```
+
+   - Remove the last migration (if needed):
+
+     ```bash
+     make remove-migrations
+     ```
+
+### Running Without Make
+
+#### Start Database
+
+```bash
+docker-compose -f docker-compose.yml up -d
+```
+
+#### Run Migrations
+
+```bash
+dotnet ef database update --project Infrastructure --startup-project Presentation
+```
+
+#### Run the Application
+
+```bash
+ASPNETCORE_ENVIRONMENT=Development dotnet run --project Presentation
+```
+
+## API Documentation
+
+Once the application is running, you can access:
+
+- Swagger UI: `https://localhost:5053/swagger`
+- OpenAPI JSON: `https://localhost:5053/swagger/v1/swagger.json`
+
+## Project Structure
+
+The solution follows Clean Architecture principles with these main projects:
+
+```
+backend/
+├── Application/       # Use cases, commands, handlers, DTOs
+├── Domain/            # Business entities and interfaces
+├── Infrastructure/    # Repositories, DB context, scripts
+│   └── scripts/       # Migration/update shell scripts
+├── Presentation/      # Endpoints, middlewares, program entry
+├── SharedKernel/      # Common base classes/utilities
+└── UnitTests/         # xUnit and NSubstitute-based tests
+```
+
+## Development
+
+> **Note:** The `Makefile` is located in the `backend` folder. Make sure to run the commands from there.
+
+### Running Tests
+
+```bash
+dotnet test
+```
+
+### Environment Configuration
+
+The following environment variables can be set in the `.env` file:
+
+- `CONNECTION_STRING`: Database connection string
+- `RUN_MIGRATIONS`: Run database migrations (true/false)
+- `ASPNETCORE_ENVIRONMENT`: Application environment (Development/Production)
 
 ## License
+
 This project is licensed under the MIT License.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request

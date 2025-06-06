@@ -1,36 +1,51 @@
 version: '3.8'
 
 services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lastlink-backend
+    ports:
+      - "5053:5053"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5053
+      - CONNECTION_STRING=Host=db;Port=5432;Database=lastlinkdb;Username=postgres;Password=postgres;Include Error Detail=true;
+      - RUN_MIGRATIONS=true
+    networks:
+      - app-network
+    restart: unless-stopped
+
   db:
     image: postgres:15-alpine
     container_name: lastlink-db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: lastlink
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=lastlinkdb
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d lastlinkdb"]
       interval: 5s
       timeout: 5s
-      retries: 5
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    depends_on:
-      - db
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
+      retries: 10
+      start_period: 10s
+    networks:
+      - app-network
+    restart: unless-stopped
 
 volumes:
   postgres_data:
-  pgadmin_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
