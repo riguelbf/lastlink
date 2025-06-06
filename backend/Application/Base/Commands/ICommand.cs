@@ -1,4 +1,4 @@
-namespace Application.Products.Commands;
+namespace Application.Base.Commands;
 
 public interface ICommand;
 

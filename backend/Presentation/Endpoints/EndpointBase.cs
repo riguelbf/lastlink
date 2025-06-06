@@ -37,4 +37,55 @@ public abstract class EndpointBase : IEndpoint
 
         return (false, errorResponse);
     }
+    
+    
+    
+    /////// Todo: Move to a middleware
+    // /// <summary>
+    // /// Handles a successful result by returning an Ok response with the result value.
+    // /// </summary>
+    // /// <typeparam name="T">The type of the result value.</typeparam>
+    // /// <param name="result">The result to handle.</param>
+    // /// <returns>An <see cref="OkObjectResult"/> with the result value.</returns>
+    // protected IActionResult HandleResult<T>(Result<T> result)
+    // {
+    //     if (result.IsSuccess)
+    //     {
+    //         return Ok(result.Value);
+    //     }
+    //
+    //     return HandleFailure(result.Error!);
+    // }
+    //
+    // /// <summary>
+    // /// Handles a successful result by returning a NoContent response.
+    // /// </summary>
+    // /// <param name="result">The result to handle.</param>
+    // /// <returns>A <see cref="NoContentResult"/> if the result is successful; otherwise, handles the failure.</returns>
+    // protected IActionResult HandleResult(Result result)
+    // {
+    //     if (result.IsSuccess)
+    //     {
+    //         return NoContent();
+    //     }
+    //
+    //     return HandleFailure(result.Error!);
+    // }
+    //
+    // /// <summary>
+    // /// Handles a failure result by returning an appropriate error response.
+    // /// </summary>
+    // /// <param name="error">The error to handle.</param>
+    // /// <returns>An <see cref="ObjectResult"/> with the appropriate status code and error details.</returns>
+    // protected virtual IActionResult HandleFailure(Error error)
+    // {
+    //     return error.Code switch
+    //     {
+    //         "Validation" => BadRequest(new { error.Code, error.Message }),
+    //         "NotFound" => NotFound(new { error.Code, error.Message }),
+    //         "Conflict" => Conflict(new { error.Code, error.Message }),
+    //         "Unauthorized" => Unauthorized(new { error.Code, error.Message }),
+    //         _ => StatusCode(500, new { error.Code, error.Message })
+    //     };
+    // }
 }

@@ -23,3 +23,15 @@ remove-migrations:
 	dotnet ef migrations remove \
 		--project $(PROJECT) \
 		-- --environment $(ENVIRONMENT)
+
+# Start development containers
+docker-up:
+	docker-compose -f docker-compose.yml up -d
+
+# Stop and remove development containers
+docker-down:
+	docker-compose -f docker-compose.yml down
+
+# View container logs
+docker-logs:
+	docker-compose -f docker-compose.yml logs -f

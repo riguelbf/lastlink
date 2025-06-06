@@ -9,6 +9,7 @@ public class ApplicationDbContext : DbContext
     {
     }
 
+    public DbSet<Domain.AdvanceRequests.AdvanceRequest> AdvanceRequests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
