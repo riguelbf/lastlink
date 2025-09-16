@@ -10,13 +10,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cc9d18ae-5441-4929-904f-f15e85803f41" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.app/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Dependencies/ApplicationModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Dependencies/ApplicationModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/AdvanceRequestEndpoint.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/ApproveAdvanceRequestEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/ApproveAdvanceRequestEndpoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/CreateAdvanceRequestEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/CreateAdvanceRequestEndpoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/GetAdvanceRequestEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/GetAdvanceRequestEndpoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/GetAdvanceRequestsByCreatorEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/GetAdvanceRequestsByCreatorEndpoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/RejectAdvanceRequestEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/RejectAdvanceRequestEndpoint.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,9 +24,26 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/Endpoints/HealthCheckEndpoint.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/GetAdvanceRequestsByCreatorEndpointTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/402b2077f38742cb9b381ab9e79e493229c00/a4/90da619f/ReceivedCallsExceptionThrower.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9d649db0aa764d449e05a9ebc629b287e22400/1f/8edec80b/IReadOnlyList`1.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17594b3bc689bd8d0f35331bf5bd52af0665815301d72311d7fac3bc623226a/ApiExplorerSettingsAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4b21fc3f8a3abb5d25f06c622276fbec0fd3932f169cc6af520bf5abc6a46b4/DbSet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73e11ef76812365d15214c653c10654b13e5da0cccfb58d12e5ebf22330a599/ApiVersionRouteConstraint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8aca45508683a6169bab9e8bd96b7cda607d638cacfaa31173c8c278c45/ISender.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/93ae622aa81491a6b9920b22434c6c61ac967acd635abfda9f3ecb2a7a7d626/Results.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -50,12 +60,20 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     ".NET Launch Settings Profile.Presentation: http.executor": "Run",
-    ".NET Launch Settings Profile.http.executor": "Debug",
+    ".NET Launch Settings Profile.http.executor": "Run",
     ".NET Project.src\\Presentation.executor": "Run",
+    "4e4f57bf-38e9-4d2a-96ec-151a793c104e.executor": "Debug",
+    "69599d2c-f605-4bfe-b1df-635f1a145d2b.executor": "Debug",
+    "73a966e1-7197-4abf-b37c-7e24bb1e900a.executor": "Debug",
+    "901559ab-e9de-4c48-bcef-f1ad7eafe62a.executor": "Debug",
+    "998638d8-2feb-4982-b337-904650aa754e.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "fix/create-stable-version",
+    "c17c676c-1b6b-4c8d-a419-e0c9e0eff2d0.executor": "Debug",
+    "c75733d9-eed8-44a1-9e24-06bce63ad1eb.executor": "Debug",
+    "ff61e752-71dd-4016-bafb-d59ffaa3f50b.executor": "Debug",
+    "git-widget-placeholder": "features/add-tests",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,6 +81,11 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "com.codeium.AppSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.http">
@@ -135,7 +158,7 @@
       <workItem from="1748978494402" duration="243000" />
       <workItem from="1748978784429" duration="455000" />
       <workItem from="1748981518405" duration="26092000" />
-      <workItem from="1749140578438" duration="4392000" />
+      <workItem from="1749140578438" duration="27754000" />
     </task>
     <servers />
   </component>
@@ -162,31 +185,167 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="NSubstitute.Exceptions.ReceivedCallsException" breakIfHandledByUserCode="true" isInternal="false" displayValue="ReceivedCallsException" namespaceName="NSubstitute.Exceptions">
+            <option name="internal" value="false" />
+          </properties>
+          <option name="timeStamp" value="21" />
+        </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/CreateAdvanceRequestEndpoint.cs</url>
-          <line>28</line>
-          <properties documentPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/CreateAdvanceRequestEndpoint.cs" containingFunctionPresentation="Method 'HandleAsync'">
+          <url>file://$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/UpdateAdvanceRequestStatus/UpdateAdvanceRequestStatusCommandHandler.cs</url>
+          <line>35</line>
+          <properties documentPath="$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/UpdateAdvanceRequestStatus/UpdateAdvanceRequestStatusCommandHandler.cs" containingFunctionPresentation="Method 'UpdateRequestStatus'">
             <startOffsets>
-              <option value="1046" />
+              <option value="1507" />
             </startOffsets>
             <endOffsets>
-              <option value="1105" />
+              <option value="1581" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="5" />
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/CreateAdvanceRequest/CreateAdvanceRequestCommandHandler.cs</url>
-          <line>26</line>
-          <properties documentPath="$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/CreateAdvanceRequest/CreateAdvanceRequestCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
+          <url>file://$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/UpdateAdvanceRequestStatus/UpdateAdvanceRequestStatusCommandHandler.cs</url>
+          <line>23</line>
+          <properties documentPath="$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/UpdateAdvanceRequestStatus/UpdateAdvanceRequestStatusCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
             <startOffsets>
-              <option value="901" />
+              <option value="880" />
             </startOffsets>
             <endOffsets>
               <option value="987" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="6" />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Domain/AdvanceRequests/AdvanceRequest.cs</url>
+          <line>95</line>
+          <properties documentPath="$PROJECT_DIR$/Domain/AdvanceRequests/AdvanceRequest.cs" containingFunctionPresentation="Method 'Approve'">
+            <startOffsets>
+              <option value="3039" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3082" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/UpdateAdvanceRequestStatus/UpdateAdvanceRequestStatusCommandHandler.cs</url>
+          <line>28</line>
+          <properties documentPath="$PROJECT_DIR$/Application/Features/AdvanceRequests/Commands/UpdateAdvanceRequestStatus/UpdateAdvanceRequestStatusCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="1120" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1226" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Application/Features/AdvanceRequests/Queries/GetAdvanceRequestsByCreator/GetAdvanceRequestsByCreatorQueryHandler.cs</url>
+          <line>14</line>
+          <properties documentPath="$PROJECT_DIR$/Application/Features/AdvanceRequests/Queries/GetAdvanceRequestsByCreator/GetAdvanceRequestsByCreatorQueryHandler.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="655" />
+            </startOffsets>
+            <endOffsets>
+              <option value="783" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Infrastructure/DataBase/Repositories/AdvanceRequestRepository.cs</url>
+          <line>37</line>
+          <properties documentPath="$PROJECT_DIR$/Infrastructure/DataBase/Repositories/AdvanceRequestRepository.cs" containingFunctionPresentation="Method 'GetByCreatorIdAsync'">
+            <startOffsets>
+              <option value="1360" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1548" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/GetAdvanceRequestByIdEndpointTests.cs</url>
+          <line>46</line>
+          <properties documentPath="$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/GetAdvanceRequestByIdEndpointTests.cs" containingFunctionPresentation="Method 'HandleAsync_ShouldReturnNotFound_WhenRequestDoesNotExist'">
+            <startOffsets>
+              <option value="1568" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1569" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/CreateAdvanceRequestEndpointTests.cs</url>
+          <line>50</line>
+          <properties documentPath="$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/CreateAdvanceRequestEndpointTests.cs" containingFunctionPresentation="Method 'HandleAsync_ShouldReturnBadRequest_WhenAmountIsLessThan100'">
+            <startOffsets>
+              <option value="1793" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1871" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/CreateAdvanceRequestEndpointTests.cs</url>
+          <line>73</line>
+          <properties documentPath="$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/CreateAdvanceRequestEndpointTests.cs" containingFunctionPresentation="Method 'HandleAsync_ShouldReturnConflict_WhenUserHasPendingRequest'">
+            <startOffsets>
+              <option value="2738" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2739" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/CreateAdvanceRequestEndpointTests.cs</url>
+          <line>34</line>
+          <properties documentPath="$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/CreateAdvanceRequestEndpointTests.cs" containingFunctionPresentation="Method 'HandleAsync_ShouldReturnCreated_WhenRequestIsValid'">
+            <startOffsets>
+              <option value="1205" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1344" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/RejectAdvanceRequestEndpointTests.cs</url>
+          <line>54</line>
+          <properties documentPath="$PROJECT_DIR$/UnitTests/AdvanceRequest/Endpoints/RejectAdvanceRequestEndpointTests.cs" containingFunctionPresentation="Method 'HandleAsync_ShouldReturnNotFound_WhenRequestDoesNotExist'">
+            <startOffsets>
+              <option value="1897" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1944" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/RejectAdvanceRequestEndpoint.cs</url>
+          <line>28</line>
+          <properties documentPath="$PROJECT_DIR$/Presentation/Endpoints/AdvanceRequest/RejectAdvanceRequestEndpoint.cs" containingFunctionPresentation="Method 'HandleAsync'">
+            <startOffsets>
+              <option value="997" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1063" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

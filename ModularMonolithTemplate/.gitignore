@@ -1,0 +1,34 @@
+# .NET build outputs
+bin/
+obj/
+**/bin/
+**/obj/
+
+# Rider / VSCode
+.idea/
+.vscode/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+logs/
+
+# Environment files (do not commit secrets)
+.env
+**/.env
+src/WebApp/WebApp/.env
+
+# Husky reports
+husky-reports/
+
+# ASP.NET artifacts
+wwwroot/dist/
+
+# OS files
+.DS_Store
+Thumbs.db
