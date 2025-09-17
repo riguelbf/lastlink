@@ -30,7 +30,7 @@ var tempo = builder.AddContainer("tempo", "grafana/tempo:2.8.2")
 
 var loki = builder.AddContainer("loki", "grafana/loki:3.5.5")
     .WithBindMount("../observability/loki-config.yaml", "/etc/loki/config.yml")
-    .WithArgs("-config.file=/etc/loki/config.yml")
+    .WithArgs("-config.file=/etc/loki/config.yml", "-config.expand-env=true")
     .WithHttpEndpoint(port: 3100, targetPort: 3100);
 
 var otel = builder.AddContainer("otel-collector", "otel/opentelemetry-collector:0.135.0")

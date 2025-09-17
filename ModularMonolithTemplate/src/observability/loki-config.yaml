@@ -1,26 +1,40 @@
 server:
   http_listen_port: 3100
+common:
+  path_prefix: /loki
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
 schema_config:
   configs:
-    - from: 2020-10-24
-      store: boltdb-shipper
+    - from: 2024-01-01
+      store: tsdb
       object_store: filesystem
       schema: v13
       index:
-        prefix: index_
+        prefix: loki_index_
         period: 24h
 storage_config:
-  boltdb_shipper:
+  tsdb_shipper:
     active_index_directory: /loki/index
-    cache_location: /loki/cache
+    cache_location: /loki/tsdb-cache
   filesystem:
     directory: /loki/chunks
 limits_config:
   ingestion_rate_mb: 8
   ingestion_burst_size_mb: 16
   max_global_streams_per_user: 5000
-chunk_store_config:
-  max_look_back_period: 0s
-table_manager:
-  retention_deletes_enabled: true
+  # Replace deprecated max_look_back_period with:
+  max_query_lookback: 168h
+  # Optional overall retention when using compactor + tsdb
   retention_period: 168h
+compactor:
+  working_directory: /loki/compactor
+  compaction_interval: 5m
+  retention_enabled: true
+  delete_request_store: filesystem
