@@ -9,6 +9,7 @@ using ModularMonolith.Platform.SharedKernel.Tracing;
 using Modules.Billing.Infra;
 using WebApp.Modules.Billing.Infra;
 using Modules.Billing.Presentation;
+using Infrastructure.Config;
 
 namespace Modules.Billing;
 
@@ -22,11 +23,19 @@ public static class BillingModule
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(MediatRTracingBehavior<,>));
 
         // DbContexts: separate write and read stores (two databases)
+        // Prefer connection strings provided by Aspire via AppHost references:
+        // ConnectionStrings:BillingWrite and ConnectionStrings:BillingRead
+        var writeConn = configuration.GetConnectionString("BillingWrite") ?? EnvVars.Get(
+            "ConnectionStrings__BillingWrite",
+            "Server=mysql;Port=3306;Database=billing-write;User=app;Password=apppwd;SslMode=None;AllowPublicKeyRetrieval=True")!;
         services.AddDbContext<BillingWriteDbContext>(opt =>
-            opt.UseInMemoryDatabase("billing-write"));
+            opt.UseMySql(writeConn, ServerVersion.AutoDetect(writeConn)));
 
+        var readConn = configuration.GetConnectionString("BillingRead") ?? EnvVars.Get(
+            "ConnectionStrings__BillingRead",
+            "Server=mysql;Port=3306;Database=billing-read;User=app;Password=apppwd;SslMode=None;AllowPublicKeyRetrieval=True")!;
         services.AddDbContext<BillingReadDbContext>(opt =>
-            opt.UseInMemoryDatabase("billing-read"));
+            opt.UseMySql(readConn, ServerVersion.AutoDetect(readConn)));
 
         // Unit of Work for write database and fluent UoW helper
         services.AddUnitOfWork<BillingWriteDbContext, BillingReadDbContext>();

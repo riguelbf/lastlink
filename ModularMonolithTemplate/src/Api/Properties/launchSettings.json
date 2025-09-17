@@ -4,8 +4,9 @@
     "http": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
+      "launchBrowser": true,
       "applicationUrl": "http://localhost:5209",
+      "launchUrl": "api-docs/v1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "SCALAR_ENABLED": "true",
@@ -17,8 +18,9 @@
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
+      "launchBrowser": true,
       "applicationUrl": "https://localhost:7105;http://localhost:5209",
+      "launchUrl": "api-docs/v1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "SCALAR_ENABLED": "true",
