@@ -29,13 +29,25 @@ public static class BillingModule
             "ConnectionStrings__BillingWrite",
             "Server=mysql;Port=3306;Database=billing-write;User=app;Password=apppwd;SslMode=None;AllowPublicKeyRetrieval=True")!;
         services.AddDbContext<BillingWriteDbContext>(opt =>
-            opt.UseMySql(writeConn, ServerVersion.AutoDetect(writeConn)));
+            opt.UseMySql(writeConn, ServerVersion.AutoDetect(writeConn), mySqlOptions =>
+            {
+                mySqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(5),
+                    errorNumbersToAdd: null);
+            }));
 
         var readConn = configuration.GetConnectionString("BillingRead") ?? EnvVars.Get(
             "ConnectionStrings__BillingRead",
             "Server=mysql;Port=3306;Database=billing-read;User=app;Password=apppwd;SslMode=None;AllowPublicKeyRetrieval=True")!;
         services.AddDbContext<BillingReadDbContext>(opt =>
-            opt.UseMySql(readConn, ServerVersion.AutoDetect(readConn)));
+            opt.UseMySql(readConn, ServerVersion.AutoDetect(readConn), mySqlOptions =>
+            {
+                mySqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(5),
+                    errorNumbersToAdd: null);
+            }));
 
         // Unit of Work for write database and fluent UoW helper
         services.AddUnitOfWork<BillingWriteDbContext, BillingReadDbContext>();
