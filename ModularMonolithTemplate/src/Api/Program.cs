@@ -3,9 +3,10 @@ using Infrastructure.Config;
 using ModularMonolith.Platform.SharedKernel.Infrastructure.Background;
 using Serilog;
 using Serilog.Formatting.Compact;
+using Serilog.Sinks.Grafana.Loki;
+using Serilog.Sinks.OpenTelemetry;
 using Serilog.Enrichers.Span;
 using Serilog.Sinks.Elasticsearch;
-using Serilog.Sinks.Grafana.Loki;
 using Scalar.AspNetCore;
 using Microsoft.Extensions.Http.Resilience;
 using Microsoft.AspNetCore.HeaderPropagation;
@@ -33,7 +34,8 @@ Activity.ForceDefaultIdFormat = true;
 // Serilog structured logging (JSON console for ELK/Grafana)
 builder.Host.UseSerilog((ctx, services, cfg) =>
 {
-    cfg.Enrich.FromLogContext()
+    cfg.MinimumLevel.Information()
+        .Enrich.FromLogContext()
         .Enrich.WithProperty("app", "webapp")
         .Enrich.WithEnvironmentName()
         .Enrich.WithMachineName()
@@ -67,9 +69,41 @@ builder.Host.UseSerilog((ctx, services, cfg) =>
         var uri = EnvVars.Get("LOG_LOKI_URI");
         if (!string.IsNullOrWhiteSpace(uri))
         {
-            // Write without explicit labels to avoid API differences; enrichers already add properties
-            cfg.WriteTo.GrafanaLoki(uri!);
+            var labels = new[]
+            {
+                new LokiLabel()
+                {
+                    Key = "app",
+                    Value = "webapp"
+                } ,
+                new LokiLabel()
+                {
+                    Key = "env",
+                    Value = ctx.HostingEnvironment.EnvironmentName
+                }
+            };
+            cfg.WriteTo.GrafanaLoki(uri!, labels: labels, textFormatter: new CompactJsonFormatter());
         }
+    }
+
+    // Optional: OTLP logs export via Serilog sink (when Serilog replaces ILogger providers)
+    // Honors OTEL_EXPORTER_OTLP_ENDPOINT and OTEL_EXPORTER_OTLP_PROTOCOL
+    var otlpEndpoint = EnvVars.Get("OTEL_EXPORTER_OTLP_ENDPOINT");
+    var otlpProtocol = (EnvVars.Get("OTEL_EXPORTER_OTLP_PROTOCOL", "grpc") ?? "grpc").ToLowerInvariant();
+    if (!string.IsNullOrWhiteSpace(otlpEndpoint))
+    {
+        var protocol = otlpProtocol == "http/protobuf" || otlpProtocol == "http" ? OtlpProtocol.HttpProtobuf : OtlpProtocol.Grpc;
+        cfg.WriteTo.OpenTelemetry(options =>
+        {
+            options.Endpoint = otlpEndpoint!;
+            options.Protocol = protocol;
+            options.ResourceAttributes = new Dictionary<string, object>
+            {
+                ["service.name"] = builder.Environment.ApplicationName,
+                ["service.instance.id"] = Environment.MachineName,
+                ["service.version"] = typeof(Program).Assembly.GetName().Version?.ToString() ?? "1.0.0"
+            };
+        });
     }
 });
 
@@ -141,17 +175,8 @@ builder.Services.AddOpenTelemetry()
         .AddSource("App.MediatR")
     );
 
-// Ensure OpenTelemetry logging pipeline has the same Resource (service.name, version)
-builder.Logging.AddOpenTelemetry();
-builder.Services.Configure<OpenTelemetryLoggerOptions>(opts =>
-{
-    opts.IncludeFormattedMessage = true;
-    opts.IncludeScopes = true;
-    opts.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(
-        serviceName: builder.Environment.ApplicationName,
-        serviceVersion: typeof(Program).Assembly.GetName().Version?.ToString() ?? "1.0.0",
-        serviceInstanceId: Environment.MachineName));
-});
+// Note: OpenTelemetry logging (OTLP) is configured via ServiceDefaults (cross-cutting UseOtlpExporter).
+// Avoid adding signal-specific AddOtlpExporter here to prevent conflicts.
 
 // Background publisher for persisted domain notifications (outbox-like)
 builder.Services.AddHostedService<DomainNotificationPublisher>();

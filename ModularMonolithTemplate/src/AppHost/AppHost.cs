@@ -54,6 +54,9 @@ builder.AddProject<Projects.Api>("webapp")
     // Provide connection strings to the API with well-known names
     .WithReference(mysqlWriteDb, "BillingWrite")
     .WithReference(mysqlReadDb, "BillingRead")
+    // Enable structured logs to Loki via Serilog sink
+    .WithEnvironment("LOG_LOKI_ENABLED", "true")
+    .WithEnvironment("LOG_LOKI_URI", "http://localhost:3100")
     .WithEnvironment("Rabbit__Connection", "amqp://guest:guest@rabbitmq:5672")
     // Exportador OTLP (traces/logs/metrics) → Collector
     .WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", "http://otel-collector:4317")
