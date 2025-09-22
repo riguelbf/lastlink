@@ -1,4 +1,4 @@
-namespace Infrastructure.Config;
+namespace ModularMonolithTemplate.Infrastructure.Config;
 
 public static class EnvVars
 {

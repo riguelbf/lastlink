@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModularMonolithTemplate.Billing.Infrastructure.Persistence;
 using ModularMonolithTemplate.Billing.Presentation.Controllers;
+using ModularMonolithTemplate.Infrastructure.Config;
 using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence;
 using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.Uow;
 using ModularMonolithTemplate.SharedKernel.Tracing;

@@ -14,6 +14,7 @@ using System.Diagnostics;
 using Api.Middleware;
 using ModularMonolithTemplate.Billing.Crosscutting.Configuration;
 using ModularMonolithTemplate.Catalog.Crosscutting.Configuration;
+using ModularMonolithTemplate.Infrastructure.Config;
 using ModularMonolithTemplate.Infrastructure.Http;
 using ModularMonolithTemplate.SharedKernel.Infrastructure.Background;
 using ModularMonolithTemplate.SharedKernel.Messaging;
