@@ -1,11 +1,11 @@
 using System.Text.Json;
-using ModularMonolith.Platform.SharedKernel.Messaging;
-using WebApp.Modules.Catalog.Infra;
-using WebApp.Modules.Catalog.Domain.Projections;
-using WebApp.Modules.Billing.Domain.Events;
-using ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence;
+using ModularMonolithTemplate.SharedKernel.Messaging;
+using ModularMonolithTemplate.Catalog.Infrastructure.Persistence;
+using ModularMonolithTemplate.Catalog.Domain.Projections;
+using ModularMonolithTemplate.Billing.Domain.Aggregates.Invoice.Events;
+using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence;
 
-namespace WebApp.Modules.Catalog.Application.Consumers;
+namespace ModularMonolithTemplate.Catalog.Application.Consumers;
 
 public sealed class InvoiceCreatedConsumer(CatalogReadDbContext readDb) : IEventConsumer
 {

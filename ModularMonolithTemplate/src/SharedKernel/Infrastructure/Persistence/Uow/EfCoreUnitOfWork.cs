@@ -2,7 +2,7 @@ using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence.Uow;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.Uow;
 
 public sealed class EfCoreUnitOfWork<TDbContext> : IUnitOfWork where TDbContext : DbContext
 {

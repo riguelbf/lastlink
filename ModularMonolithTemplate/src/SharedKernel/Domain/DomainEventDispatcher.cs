@@ -1,9 +1,9 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
-using ModularMonolith.Platform.SharedKernel.Messaging;
-using ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence;
+using ModularMonolithTemplate.SharedKernel.Messaging;
+using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence;
 
-namespace ModularMonolith.Platform.SharedKernel.Domain;
+namespace ModularMonolithTemplate.SharedKernel.Domain;
 
 public sealed class DomainEventDispatcher(IEventBus bus)
 {

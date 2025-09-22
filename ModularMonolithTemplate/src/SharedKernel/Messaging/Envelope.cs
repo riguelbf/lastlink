@@ -1,7 +1,6 @@
 using System.Diagnostics;
-using System.Linq;
 
-namespace ModularMonolith.Platform.SharedKernel.Messaging;
+namespace ModularMonolithTemplate.SharedKernel.Messaging;
 
 public sealed record Envelope<T>(
     T Message,

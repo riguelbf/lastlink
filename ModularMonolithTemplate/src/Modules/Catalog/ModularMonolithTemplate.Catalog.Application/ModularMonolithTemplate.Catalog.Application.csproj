@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>ModularMonolithTemplate.Catalog.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ModularMonolithTemplate.Catalog.Domain\ModularMonolithTemplate.Catalog.Domain.csproj" />
+      <ProjectReference Include="..\ModularMonolithTemplate.Catalog.Infrastructure\ModularMonolithTemplate.Catalog.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.csproj" />
+      <ProjectReference Include="..\..\Billing\ModularMonolithTemplate.Billing.Domain\ModularMonolithTemplate.Billing.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

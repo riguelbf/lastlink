@@ -1,11 +1,11 @@
 using System.Data;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
-using ModularMonolith.Platform.SharedKernel.Domain;
 using ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence.Audit;
-using ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence.DomainNotifications;
+using ModularMonolithTemplate.SharedKernel.Domain;
+using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.DomainNotifications;
 
-namespace ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence.Uow;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.Uow;
 
 public sealed class FluentUnitOfWork<TDbContext> where TDbContext : DbContext
 {
@@ -111,7 +111,7 @@ public sealed class FluentUnitOfWork<TDbContext> where TDbContext : DbContext
                 EntityName = entityName,
                 EntityId = entityId,
                 Operation = e.State.ToString(),
-                DataJson = JsonSerializer.Serialize(snapshot, Infrastructure.Persistence.AppDbContext.SafeJson)
+                DataJson = JsonSerializer.Serialize(snapshot, ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.AppDbContext.SafeJson)
             };
 
             await _db.Set<AuditLog>().AddAsync(log, ct);
@@ -133,7 +133,7 @@ public sealed class FluentUnitOfWork<TDbContext> where TDbContext : DbContext
                 var dn = new DomainNotification
                 {
                     EventType = ev.GetType().FullName ?? ev.GetType().Name,
-                    EventJson = JsonSerializer.Serialize(ev, Infrastructure.Persistence.AppDbContext.SafeJson),
+                    EventJson = JsonSerializer.Serialize(ev, ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.AppDbContext.SafeJson),
                     OccurredAtUtc = (ev is IDomainEvent de) ? de.OccurredOnUtc : DateTime.UtcNow,
                     CreatedAtUtc = DateTime.UtcNow,
                     AggregateId = TryGetAggregateId(agg)

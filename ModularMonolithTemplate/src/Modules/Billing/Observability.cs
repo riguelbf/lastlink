@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace WebApp.Modules.Billing;
+namespace ModularMonolithTemplate.Billing;
 
 public static class Observability
 {

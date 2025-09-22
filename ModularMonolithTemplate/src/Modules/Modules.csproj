@@ -7,9 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Billing\Application\" />
       <Folder Include="Billing\Contracts\" />
-      <Folder Include="Catalog\Contracts\" />
-      <Folder Include="Catalog\Infra\Migrations\" />
+      <Folder Include="Billing\Domain\" />
+      <Folder Include="Billing\Infra\" />
+      <Folder Include="Billing\Presentation\" />
+      <Folder Include="Catalog\Domain\" />
+      <Folder Include="Catalog\Infra\" />
+      <Folder Include="Catalog\Presentation\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -25,6 +30,39 @@
     <ItemGroup>
       <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Catalog\ModularMonolithTemplate.Catalog.Tests\Class1.cs">
+        <Link>Catalog\ModularMonolithTemplate.Billing.Tests\Class1.cs</Link>
+      </Compile>
+      <Compile Update="Catalog\ModularMonolithTemplate.Catalog.Presentation\Controllers\CatalogController.cs">
+        <Link>Catalog\ModularMonolithTemplate.Billing.Presentation\Controllers\CatalogController.cs</Link>
+      </Compile>
+      <Compile Update="Catalog\ModularMonolithTemplate.Catalog.Presentation\Controllers\CatalogReadController.cs">
+        <Link>Catalog\ModularMonolithTemplate.Billing.Presentation\Controllers\CatalogReadController.cs</Link>
+      </Compile>
+      <Compile Update="Catalog\ModularMonolithTemplate.Catalog.Contracts\Class1.cs">
+        <Link>Catalog\ModularMonolithTemplate.Billing.Contracts\Class1.cs</Link>
+      </Compile>
+      <Compile Update="Catalog\ModularMonolithTemplate.Catalog.Domain\Projections\CatalogInvoice.cs">
+        <Link>Catalog\ModularMonolithTemplate.Billing.Domain\Projections\CatalogInvoice.cs</Link>
+      </Compile>
+      <Compile Update="Catalog\ModularMonolithTemplate.Catalog.Infrastructure\Persistence\CatalogReadDbContext.cs">
+        <Link>Catalog\ModularMonolithTemplate.Billing.Infrastructure\Persistence\CatalogReadDbContext.cs</Link>
+      </Compile>
+      <Compile Update="Catalog\ModularMonolithTemplate.Catalog.Infrastructure\Persistence\CatalogWriteDbContext.cs">
+        <Link>Catalog\ModularMonolithTemplate.Billing.Infrastructure\Persistence\CatalogWriteDbContext.cs</Link>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Catalog\ModularMonolithTemplate.Catalog.Tests\Integration\.gitkeep">
+        <Link>Catalog\ModularMonolithTemplate.Billing.Tests\Integration\.gitkeep</Link>
+      </None>
+      <None Update="Catalog\ModularMonolithTemplate.Catalog.Tests\Unit\.gitkeep">
+        <Link>Catalog\ModularMonolithTemplate.Billing.Tests\Unit\.gitkeep</Link>
+      </None>
     </ItemGroup>
 
 </Project>

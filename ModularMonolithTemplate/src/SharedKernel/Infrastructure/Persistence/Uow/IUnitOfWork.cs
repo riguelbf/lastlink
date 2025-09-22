@@ -2,7 +2,7 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence.Uow;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.Uow;
 
 public interface IUnitOfWork
 {

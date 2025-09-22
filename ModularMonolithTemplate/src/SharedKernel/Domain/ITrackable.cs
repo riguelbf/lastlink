@@ -1,4 +1,4 @@
-namespace ModularMonolith.Platform.SharedKernel.Domain;
+namespace ModularMonolithTemplate.SharedKernel.Domain;
 
 public interface ITrackable
 {

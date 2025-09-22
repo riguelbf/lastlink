@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>ModularMonolithTemplate.Catalog.Presentation</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+      <PackageReference Include="Mapster" Version="7.4.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ModularMonolithTemplate.Catalog.Infrastructure\ModularMonolithTemplate.Catalog.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

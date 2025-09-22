@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>ModularMonolithTemplate.Catalog.Infrastructure</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Persistence\Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="../../../SharedKernel/SharedKernel.csproj" />
+      <ProjectReference Include="../../../Infrastructure/Infrastructure.csproj" />
+      <ProjectReference Include="..\ModularMonolithTemplate.Catalog.Domain\ModularMonolithTemplate.Catalog.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

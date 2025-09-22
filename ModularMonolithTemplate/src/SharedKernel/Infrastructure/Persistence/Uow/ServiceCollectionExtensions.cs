@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.Uow;
 
-namespace ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence.Uow;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.Uow;
 
 public static class ServiceCollectionExtensions
 {

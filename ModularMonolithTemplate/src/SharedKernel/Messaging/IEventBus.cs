@@ -1,4 +1,4 @@
-namespace ModularMonolith.Platform.SharedKernel.Messaging;
+namespace ModularMonolithTemplate.SharedKernel.Messaging;
 
 public interface IEventBus
 {

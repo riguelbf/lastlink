@@ -1,4 +1,4 @@
-namespace ModularMonolith.Platform.SharedKernel.Pagination;
+namespace ModularMonolithTemplate.SharedKernel.Pagination;
 
 public sealed record PageRequest(int PageNumber = 1, int PageSize = 50)
 {

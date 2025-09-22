@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using MediatR;
 
-namespace ModularMonolith.Platform.SharedKernel.Tracing;
+namespace ModularMonolithTemplate.SharedKernel.Tracing;
 
 public sealed class MediatRTracingBehavior<TReq, TRes> : IPipelineBehavior<TReq, TRes>
     where TReq : IRequest<TRes>

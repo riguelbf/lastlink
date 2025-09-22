@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>ModularMonolithTemplate.Catalog.Crosscutting</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="13.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ModularMonolithTemplate.Catalog.Application\ModularMonolithTemplate.Catalog.Application.csproj" />
+      <ProjectReference Include="..\ModularMonolithTemplate.Catalog.Infrastructure\ModularMonolithTemplate.Catalog.Infrastructure.csproj" />
+      <ProjectReference Include="..\ModularMonolithTemplate.Catalog.Presentation\ModularMonolithTemplate.Catalog.Presentation.csproj" />
+    </ItemGroup>
+
+</Project>

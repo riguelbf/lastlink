@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Hosting;
 using Infrastructure.Config;
 using ModularMonolith.Platform.SharedKernel.Infrastructure.Background;
 using Serilog;
@@ -8,24 +7,32 @@ using Serilog.Sinks.OpenTelemetry;
 using Serilog.Enrichers.Span;
 using Serilog.Sinks.Elasticsearch;
 using Scalar.AspNetCore;
-using Microsoft.Extensions.Http.Resilience;
-using Microsoft.AspNetCore.HeaderPropagation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
 using System.Diagnostics;
 using Api.Middleware;
-using ModularMonolith.Platform.SharedKernel.Messaging;
-using OpenTelemetry.Logs;
-using WebApp.Infrastructure.Http;
-using Modules.Billing;
-using WebApp.Modules.Catalog;
+using ModularMonolithTemplate.Billing.Crosscutting.Configuration;
+using ModularMonolithTemplate.Catalog.Crosscutting.Configuration;
+using ModularMonolithTemplate.Infrastructure.Http;
+using ModularMonolithTemplate.SharedKernel.Infrastructure.Background;
+using ModularMonolithTemplate.SharedKernel.Messaging;
+using OpenTelemetry.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Load environment variables from .env (if present)
 EnvVars.Load(builder.Environment.ContentRootPath);
+
+// Diagnostics: enable Serilog SelfLog if requested (defaults to on in Development via env)
+var enableSelfLog = EnvVars.GetBool("SERILOG_SELFLOG", builder.Environment.IsDevelopment());
+if (enableSelfLog)
+{
+    Serilog.Debugging.SelfLog.Enable(msg => Console.Error.WriteLine($"[SerilogSelfLog] {msg}"));
+}
+
+// Print key logging-related envs to help diagnose Aspire wiring (console only)
+Console.WriteLine($"[Diag] LOG_LOKI_ENABLED={EnvVars.Get("LOG_LOKI_ENABLED")}, LOG_LOKI_URI={EnvVars.Get("LOG_LOKI_URI")}, OTEL_EXPORTER_OTLP_ENDPOINT={EnvVars.Get("OTEL_EXPORTER_OTLP_ENDPOINT")}, OTEL_EXPORTER_OTLP_PROTOCOL={EnvVars.Get("OTEL_EXPORTER_OTLP_PROTOCOL")}");
 
 // Ensure W3C trace id format for consistent linking across OTel/Serilog/Aspire
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
@@ -90,6 +97,7 @@ builder.Host.UseSerilog((ctx, services, cfg) =>
     // Honors OTEL_EXPORTER_OTLP_ENDPOINT and OTEL_EXPORTER_OTLP_PROTOCOL
     var otlpEndpoint = EnvVars.Get("OTEL_EXPORTER_OTLP_ENDPOINT");
     var otlpProtocol = (EnvVars.Get("OTEL_EXPORTER_OTLP_PROTOCOL", "grpc") ?? "grpc").ToLowerInvariant();
+    
     if (!string.IsNullOrWhiteSpace(otlpEndpoint))
     {
         var protocol = otlpProtocol == "http/protobuf" || otlpProtocol == "http" ? OtlpProtocol.HttpProtobuf : OtlpProtocol.Grpc;
@@ -173,6 +181,20 @@ builder.Services.AddOpenTelemetry()
         .AddSource("Billing")
         .AddSource("Catalog")
         .AddSource("App.MediatR")
+        .AddSource("Diag")
+    )
+    .WithMetrics(mb => mb
+        .ConfigureResource(rb => rb
+            .AddService(
+                serviceName: builder.Environment.ApplicationName,
+                serviceVersion: typeof(Program).Assembly.GetName().Version?.ToString() ?? "1.0.0",
+                serviceInstanceId: Environment.MachineName))
+        // Built-in meters for ASP.NET Core and Kestrel
+        .AddMeter("Microsoft.AspNetCore.Hosting")
+        .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
+        // Instrumentations
+        .AddRuntimeInstrumentation()
+        .AddProcessInstrumentation()
     );
 
 // Note: OpenTelemetry logging (OTLP) is configured via ServiceDefaults (cross-cutting UseOtlpExporter).
@@ -230,6 +252,19 @@ app.MapControllers();
 // Map module endpoints (if using minimal APIs inside modules)
 BillingModule.MapBilling(app);
 CatalogModule.MapCatalog(app);
+
+// Diagnostics endpoint to verify end-to-end telemetry (traces + logs)
+app.MapGet("/diag/ping", (ILogger<Program> logger) =>
+{
+    using var activity = new System.Diagnostics.ActivitySource("Diag").StartActivity("diag-ping");
+    logger.LogInformation("Diag ping hit at {Timestamp}", DateTimeOffset.UtcNow);
+    return Results.Ok(new
+    {
+        ok = true,
+        time = DateTimeOffset.UtcNow,
+        traceId = System.Diagnostics.Activity.Current?.TraceId.ToString()
+    });
+});
 
 // Health checks
 app.MapHealthChecks("/health");

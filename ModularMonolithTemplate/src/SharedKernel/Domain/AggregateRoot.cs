@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ModularMonolith.Platform.SharedKernel.Domain;
+namespace ModularMonolithTemplate.SharedKernel.Domain;
 
 public abstract class AggregateRoot : IAggregateRoot
 {

@@ -1,23 +1,23 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ModularMonolith.Platform.SharedKernel.Messaging;
-
-public sealed class InProcessEventBus(IServiceProvider serviceProvider) : IEventBus
+namespace ModularMonolithTemplate.SharedKernel.Messaging
 {
-    public async Task PublishAsync(string eventType, string eventJson, CancellationToken ct = default)
+    public sealed class InProcessEventBus : IEventBus
     {
-        using var scope = serviceProvider.CreateScope();
-        var consumers = scope.ServiceProvider.GetServices<IEventConsumer>();
-        foreach (var consumer in consumers)
+        private readonly IServiceProvider _serviceProvider;
+
+        public InProcessEventBus(IServiceProvider serviceProvider)
         {
-            try
+            _serviceProvider = serviceProvider;
+        }
+
+        public async Task PublishAsync(string eventType, string eventJson, CancellationToken ct = default)
+        {
+            using var scope = _serviceProvider.CreateScope();
+            var consumers = scope.ServiceProvider.GetServices<IEventConsumer>();
+            foreach (var c in consumers)
             {
-                await consumer.HandleAsync(eventType, eventJson, ct);
-            }
-            catch
-            {
-                // let caller handle retries and errors (publisher does)
-                throw;
+                await c.HandleAsync(eventType, eventJson, ct);
             }
         }
     }

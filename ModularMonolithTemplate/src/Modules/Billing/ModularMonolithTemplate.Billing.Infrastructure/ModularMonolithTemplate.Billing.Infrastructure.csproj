@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="13.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="../../../SharedKernel/SharedKernel.csproj" />
+      <ProjectReference Include="../../../Infrastructure/Infrastructure.csproj" />
+      <ProjectReference Include="..\ModularMonolithTemplate.Billing.Domain\ModularMonolithTemplate.Billing.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

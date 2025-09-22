@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 
-namespace ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence;
 
 public abstract class AppDbContext : DbContext
 {

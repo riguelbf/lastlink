@@ -1,6 +1,6 @@
-using ModularMonolith.Platform.SharedKernel.Domain;
+using ModularMonolithTemplate.SharedKernel.Domain;
 
-namespace ModularMonolith.Platform.SharedKernel.Persistence;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence;
 
 public interface IWriteBaseRepository<T> where T : class, IAggregateRoot
 {

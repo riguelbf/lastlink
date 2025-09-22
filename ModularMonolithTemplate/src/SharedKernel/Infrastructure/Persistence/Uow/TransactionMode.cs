@@ -1,4 +1,4 @@
-namespace ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence.Uow;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.Uow;
 
 public enum TransactionMode
 {

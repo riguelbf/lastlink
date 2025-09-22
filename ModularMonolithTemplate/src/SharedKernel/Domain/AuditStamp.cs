@@ -1,13 +1,13 @@
 using System;
 
-namespace ModularMonolith.Platform.SharedKernel.Domain;
+namespace ModularMonolithTemplate.SharedKernel.Domain;
 
 public sealed class AuditStamp
 {
-    public DateTime CreatedAtUtc { get; private set; }
-    public string? CreatedBy { get; private set; }
-    public DateTime? UpdatedAtUtc { get; private set; }
-    public string? UpdatedBy { get; private set; }
+    public string? CreatedBy { get; init; }
+    public DateTime CreatedAtUtc { get; init; }
+    public string? UpdatedBy { get; init; }
+    public DateTime? UpdatedAtUtc { get; init; }
 
     private AuditStamp()
     {

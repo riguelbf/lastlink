@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebApp.Infrastructure.Http;
+namespace ModularMonolithTemplate.Infrastructure.Http;
 
 public sealed class DynamicApi(HttpClient http)
     : IDynamicApi

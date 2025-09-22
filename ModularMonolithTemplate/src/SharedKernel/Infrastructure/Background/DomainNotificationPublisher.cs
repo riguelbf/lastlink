@@ -1,27 +1,24 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence;
-using ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence.DomainNotifications;
-using ModularMonolith.Platform.SharedKernel.Messaging;
+using ModularMonolith.Platform.SharedKernel.Infrastructure.Background;
+using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence;
+using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.DomainNotifications;
+using ModularMonolithTemplate.SharedKernel.Messaging;
 
-namespace ModularMonolith.Platform.SharedKernel.Infrastructure.Background;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Background;
 
 public sealed class DomainNotificationPublisher(
     IServiceScopeFactory scopeFactory,
-    ILogger<DomainNotificationPublisher> logger,
-    IOptions<DomainNotificationPublisherOptions> options
+    DomainNotificationPublisherOptions options,
+    ILogger<DomainNotificationPublisher> logger
 ) : BackgroundService
 {
-    private readonly DomainNotificationPublisherOptions _opt = options.Value;
-
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var timer = new PeriodicTimer(_opt.PollInterval);
+        var timer = new PeriodicTimer(options.PollInterval);
         logger.LogInformation("DomainNotificationPublisher started (batch={Batch}, interval={Interval})",
-            _opt.BatchSize, _opt.PollInterval);
+            options.BatchSize, options.PollInterval);
 
         try
         {
@@ -43,7 +40,7 @@ public sealed class DomainNotificationPublisher(
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var bus = scope.ServiceProvider.GetRequiredService<IEventBus>();
 
-        var batch = await DomainNotificationQueries.LeaseBatchAsync(db, _opt.BatchSize, ct);
+        var batch = await DomainNotificationQueries.LeaseBatchAsync(db, options.BatchSize, ct);
         if (batch.Count == 0) return;
 
         foreach (var n in batch)
@@ -65,7 +62,7 @@ public sealed class DomainNotificationPublisher(
                 n.LastError = ex.Message;
                 await db.SaveChangesAsync(ct);
 
-                if (n.Attempts >= _opt.MaxAttempts)
+                if (n.Attempts >= options.MaxAttempts)
                 {
                     logger.LogError(ex, "DomainNotification {Id} moved to poison (attempts={Attempts})", n.Id, n.Attempts);
                 }
@@ -76,7 +73,7 @@ public sealed class DomainNotificationPublisher(
     private async Task PublishWithImmediateRetryAsync(IEventBus bus, DomainNotification n, CancellationToken ct)
     {
         var attempt = 0;
-        var delay = _opt.FirstBackoff;
+        var delay = options.FirstBackoff;
 
         while (true)
         {
@@ -85,7 +82,7 @@ public sealed class DomainNotificationPublisher(
                 await bus.PublishAsync(n.EventType, n.EventJson, ct);
                 return;
             }
-            catch when (attempt < _opt.MaxImmediateRetries)
+            catch when (attempt < options.MaxImmediateRetries)
             {
                 attempt++;
                 await Task.Delay(Jitter(delay, attempt), ct);

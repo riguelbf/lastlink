@@ -1,7 +1,7 @@
-using ModularMonolith.Platform.SharedKernel.Domain;
-using ModularMonolith.Platform.SharedKernel.Pagination;
+using ModularMonolithTemplate.SharedKernel.Domain;
+using ModularMonolithTemplate.SharedKernel.Pagination;
 
-namespace ModularMonolith.Platform.SharedKernel.Persistence;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence;
 
 public interface IReadBaseRepository<T> where T : class, IAggregateRoot
 {

@@ -1,4 +1,4 @@
-namespace ModularMonolith.Platform.SharedKernel.Infrastructure.Persistence.DomainNotifications;
+namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.DomainNotifications;
 
 public sealed class DomainNotification
 {
