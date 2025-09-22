@@ -1,0 +1,24 @@
+#!/bin/sh
+set -euo pipefail
+
+# Source Husky shim if available (set by `dotnet husky install`)
+if [ -f "$(dirname "$0")/_/husky.sh" ]; then
+  . "$(dirname "$0")/_/husky.sh"
+fi
+
+echo "[husky] pre-commit: build and lint (dotnet format verify)"
+
+# Build the solution to catch compile errors early
+if ! dotnet build ModularMonolithTemplate.sln --configuration Release --nologo; then
+  echo "Build failed. Fix errors before committing."
+  exit 1
+fi
+
+# Lint/format check (does not modify files). Fails if formatting issues are found.
+# Run `dotnet format` locally to apply fixes, then stage the changes.
+if ! dotnet format --verify-no-changes; then
+  echo "Formatting issues detected. Run 'dotnet format' to fix them, then stage and commit again."
+  exit 1
+fi
+
+echo "pre-commit checks passed."

@@ -1,0 +1,38 @@
+#!/bin/sh
+set -euo pipefail
+
+echo "[husky] pre-push: build, test, lint (format verify), optional CodeRabbit"
+
+# Build the solution
+if ! dotnet build; then
+  echo "Build failed. Fix errors before pushing."
+  exit 1
+fi
+
+# Run tests (no rebuild to save time)
+if ! dotnet test --no-build; then
+  echo "Tests failed. Fix failing tests before pushing."
+  exit 1
+fi
+
+# Lint/format check (does not modify files). Fails if formatting issues are found.
+if ! dotnet format --verify-no-changes; then
+  echo "Formatting issues detected. Run 'dotnet format' to fix them, then commit again."
+  exit 1
+fi
+
+# Optional: Run CodeRabbit CLI if available
+if command -v coderabbit >/dev/null 2>&1; then
+  echo "Running CodeRabbit CLI (plain mode)"
+  if [ "${CODERABBIT_STRICT:-0}" = "1" ]; then
+    # Strict mode: fail the push if CodeRabbit exits non-zero
+    coderabbit --plain
+  else
+    # Non-strict: run but do not block push
+    coderabbit --plain || true
+  fi
+else
+  echo "CodeRabbit CLI not found. Skipping local code review."
+fi
+
+echo "pre-push checks passed."
