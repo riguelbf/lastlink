@@ -1,6 +1,4 @@
-using Microsoft.Extensions.Hosting;
-using Aspire.Hosting;
-using Aspire.Hosting.MySql;
+using Google.Protobuf.WellKnownTypes;
 
 var builder = DistributedApplication.CreateBuilder(args);
 

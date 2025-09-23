@@ -1,14 +1,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.OpenApi;
 using Microsoft.AspNetCore.Routing;
 using ModularMonolithTemplate.Billing.Infrastructure.Invoice.Commands;
 using ModularMonolithTemplate.Infrastructure.Http.Endpoints;
 
 namespace ModularMonolithTemplate.Billing.Presentation.Endpoints;
 
-public sealed class BillingEndpoints : IEndpointRegistrar
+public sealed class BillingEndpoints : IEndpointRegister
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {

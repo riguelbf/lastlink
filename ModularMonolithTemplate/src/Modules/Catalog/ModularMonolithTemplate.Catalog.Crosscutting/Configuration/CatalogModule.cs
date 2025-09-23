@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModularMonolithTemplate.Catalog.Application.Consumers;
 using ModularMonolithTemplate.Catalog.Infrastructure.Persistence;
-using ModularMonolithTemplate.Catalog.Presentation.Controllers;
+using ModularMonolithTemplate.Catalog.Presentation.Endpoints;
 using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.Uow;
 using ModularMonolithTemplate.SharedKernel.Messaging;
 using ModularMonolithTemplate.SharedKernel.Tracing;
@@ -17,7 +17,7 @@ public static class CatalogModule
     public static IServiceCollection AddCatalog(this IServiceCollection services, IConfiguration configuration)
     {
         // Register Catalog services, DbContexts, Repositories, etc.
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CatalogReadController>());
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CatalogEndpoints>());
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(MediatRTracingBehavior<,>));
 
         // DbContexts: separate write and read stores (two databases)

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using ModularMonolith.Platform.SharedKernel.Infrastructure.Background;
 using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence;
 using ModularMonolithTemplate.SharedKernel.Infrastructure.Persistence.DomainNotifications;
@@ -10,10 +11,11 @@ namespace ModularMonolithTemplate.SharedKernel.Infrastructure.Background;
 
 public sealed class DomainNotificationPublisher(
     IServiceScopeFactory scopeFactory,
-    DomainNotificationPublisherOptions options,
+    IOptions<DomainNotificationPublisherOptions> optionsAccessor,
     ILogger<DomainNotificationPublisher> logger
 ) : BackgroundService
 {
+    private readonly DomainNotificationPublisherOptions options = optionsAccessor.Value;
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var timer = new PeriodicTimer(options.PollInterval);

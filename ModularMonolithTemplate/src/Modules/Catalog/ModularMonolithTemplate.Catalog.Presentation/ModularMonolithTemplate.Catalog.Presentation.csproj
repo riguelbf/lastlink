@@ -12,9 +12,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
       <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
       <PackageReference Include="Mapster" Version="7.4.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+    </ItemGroup>
+
+    <!-- Exclude MVC controllers since we migrated to minimal API endpoints -->
+    <ItemGroup>
+      <Compile Remove="Controllers/*.cs" />
     </ItemGroup>
 
     <ItemGroup>
