@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ModularMonolithTemplate.Catalog.Infrastructure\ModularMonolithTemplate.Catalog.Infrastructure.csproj" />
+      <ProjectReference Include="../../../Infrastructure/Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

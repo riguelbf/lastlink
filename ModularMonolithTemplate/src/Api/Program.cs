@@ -8,6 +8,7 @@ using Serilog.Enrichers.Span;
 using Serilog.Sinks.Elasticsearch;
 using Scalar.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using ModularMonolithTemplate.Infrastructure.Http.Endpoints;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
 using System.Diagnostics;
@@ -120,7 +121,6 @@ builder.Host.UseSerilog((ctx, services, cfg) =>
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHealthChecks();
 
@@ -247,8 +247,8 @@ app.UseHeaderPropagation();
 // Global exception handling
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-// Attribute-routed controllers
-app.MapControllers();
+// Discover and register minimal API endpoints from all loaded assemblies
+app.MapDiscoveredEndpoints();
 
 // Map module endpoints (if using minimal APIs inside modules)
 BillingModule.MapBilling(app);

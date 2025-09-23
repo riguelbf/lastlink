@@ -17,4 +17,9 @@
       <ProjectReference Include="..\ModularMonolithTemplate.Billing.Domain\ModularMonolithTemplate.Billing.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Persistence\Migrations\" />
+      <Folder Include="Persistence\Repositories\" />
+    </ItemGroup>
+
 </Project>
